@@ -1,0 +1,22 @@
+{
+  "name": "chat",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build" : "npm i --prefix express && npm i --prefix reactjs && npm run build --prefix reactjs" ,
+    "start": "npm run start --prefix express " 
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abdallah-ayan/chatify.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/abdallah-ayan/chatify/issues"
+  },
+  "homepage": "https://github.com/abdallah-ayan/chatify#readme"
+}
