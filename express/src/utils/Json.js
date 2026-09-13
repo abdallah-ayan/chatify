@@ -17,6 +17,14 @@ export default class {
         });
     }
 
+    /**
+     * Sets the authentication token cookie for the response.
+     *
+     * @param {string} val Cookie value to send.
+     * @param {number} [age] Cookie lifetime in milliseconds; defaults to
+     * the configured token expiration.
+     * @returns {this} This response builder for further chaining.
+     */
     token(val , age = +process.env.TOKEN_EXPAIRE) {
         const option = {
             maxAge : age ,
