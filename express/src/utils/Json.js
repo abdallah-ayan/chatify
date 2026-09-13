@@ -17,9 +17,9 @@ export default class {
         });
     }
 
-    token(val) {
+    token(val , age = +process.env.TOKEN_EXPAIRE) {
         const option = {
-            maxAge : +process.env.TOKEN_EXPAIRE ,
+            maxAge : age ,
             secure : true ,
             httpOnly : process.env.NODE_ENV == "development" ? false : true ,
             sameSite : "strict"
