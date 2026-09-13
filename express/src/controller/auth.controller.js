@@ -17,6 +17,11 @@ export const signUp = async (req, res) => {
     }
 }
 
+/**
+ * Authenticates an email and password, then returns the user's public profile
+ * and sets an authentication token cookie. Invalid credentials receive a 400
+ * response, while unexpected authentication failures receive a 500 response.
+ */
 export const login = async (req, res) => {
     try{
         const user = await User.findOne({email : req.body.email}).select("+password");
@@ -32,6 +37,10 @@ export const login = async (req, res) => {
     }
 }
 
+/**
+ * Logs out the client by replacing the authentication token cookie with an
+ * immediately expired value and returning a success response.
+ */
 export const logout = (req, res) => {
     Res(res).status(200).state("success").token("" , 0).message("You have been successfully logged out.").end();
 }
