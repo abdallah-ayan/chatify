@@ -20,8 +20,8 @@ export default class {
     token(val , age = +process.env.TOKEN_EXPAIRE) {
         const option = {
             maxAge : age ,
-            secure : true ,
-            httpOnly : process.env.NODE_ENV == "development" ? false : true ,
+            secure :  process.env.NODE_ENV == "development" ? false : true  ,
+            httpOnly : true,
             sameSite : "strict"
         }
         this.res.cookie("token" , val , option)
