@@ -33,12 +33,18 @@ function TokenExpiredErrorHandler(err) {
     err.message = "The token you provided has expired.";
 }
 
+function CastErrorHandler(err) {
+    err.message = "The ID you entered is invalid"
+    err.status = 400
+}
+
 function prodError(error , res) {
     const err = Object.create(Object.getPrototypeOf(error),Object.getOwnPropertyDescriptors(error));
     if(error.isOpertionalError) return Res(res).status(error.status).state("error").message(error.message).end();
 
 
     if(error.code == "11000") duplicateErrorHandler(err)
+    else if (error.name === "ValidationError" &&Object.values(error.errors).some(err => err.name === "CastError")) CastErrorHandler(err);
     else if (Object.values(error.errors ?? {}).some(err => err.name === "ValidatorError")) ValidatorErrorHanlder(err);
     else if(error.name == "JsonWebTokenError") JsonWebTokenErrorHandler(err)
     else if(error.name == "TokenExpiredError") TokenExpiredErrorHandler(err)
