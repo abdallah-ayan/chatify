@@ -11,7 +11,7 @@ import customError from "../utils/customError.js";
 export const signUp = asyncErrorHandler(async (req, res) => {
     const user = await User.create(req.body);
     const {fullName ,email ,profilePic} = user
-    await sendEmail(user.fullName , user.email , "You Welcom" , emailTemplate(user.fullName , process.env.CLIENT_URL));
+    await sendEmail( user.email , "You Welcom" , emailTemplate(user.fullName , process.env.CLIENT_URL));
     Res(res).status(201).state("success").token(generateToken(user._id)).data({fullName ,email ,profilePic} ).message("User created successfully").end();  
 })
 
