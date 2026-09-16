@@ -8,12 +8,18 @@ import { connectDB } from "./lib/db.js";
 import cookieParser from "cookie-parser"
 import errorController from "./controller/error.Controller.js";
 import { arcjetProduction } from "./middleware/arcjet.middleware.js";
+import cors from "cors"
 dotenv.config()
 const app = express();
 
 app.use(arcjetProduction); //EYS
 app.use(express.json({limit : "10kb"}));
 app.use(cookieParser())
+app.use(cors({
+    // origin : process.env.NODE_ENV == "development" ? CLIENT_URL_DEV : process.env.CLIENT_URL ,
+    origin : process.env.CLIENT_URL_DEV ,
+    credentials : true
+}))
 app.use("/api/auth/" , authRouter)
 app.use("/api/user/" , userRouter)
 app.use("/api/message/" , messagesRoute)
