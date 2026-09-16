@@ -1,8 +1,7 @@
 import nodemailer from "nodemailer";
 import "dotenv/config";
-import emailTemplate from "../template/emailTemplate.js";
 
-export default async function sendMail(name , email , subject  , html , text = undefined) {
+export default async function sendMail( email , subject  , html , text = undefined) {
     try {
         const transporter = nodemailer.createTransport({
             host: "smtp.gmail.com",
@@ -14,7 +13,7 @@ export default async function sendMail(name , email , subject  , html , text = u
             },
         });
 
-        const info = await transporter.sendMail({
+        await transporter.sendMail({
             from: `"Example Team" <${process.env.SMTP_USER}>`,
             to: email,
             subject: subject,
@@ -23,7 +22,5 @@ export default async function sendMail(name , email , subject  , html , text = u
         });
 
 
-    } catch (err) {
-        throw new Error(err.message)
-    }
+    } catch (err) {}
 }

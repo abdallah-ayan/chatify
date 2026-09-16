@@ -1,7 +1,6 @@
 import jwt from "jsonwebtoken"
 import util from "util"
 import User from "../model/User.js";
-import Res from "../utils/Res.js";
 import "dotenv/config"
 import customError from "../utils/customError.js";
 import asyncErrorHandler from "../utils/asyncErrorHandler.js";
