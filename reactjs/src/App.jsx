@@ -16,8 +16,8 @@ export default function App() {
       <div className="absolute top-0 -left-4 size-96 bg-pink-500 opacity-20 blur-[100px]" />
       <div className="absolute bottom-0 -right-4 size-96 bg-cyan-500 opacity-20 blur-[100px]" />
       <Routes>
-        <Route path="/" element={<Authentication />}>
-          <Route element={<ChatPage />} />
+        <Route element={<Authentication />}>
+          <Route path="/" element={<ChatPage />} />
         </Route>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<SignUpPage />} />
