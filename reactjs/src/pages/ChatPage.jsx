@@ -38,21 +38,3 @@ export default function ChatPage() {
   )
 }
 
-//  async function handleLogout() {
-//     console.log(1)
-//     const state = await logout();
-//     if (state) {
-//       navigate("/login");
-//     }
-//   }
-//  const navigate = useNavigate();
-
-  // const { logout, isLogouting } = useAuthStore();
-
-{/* <button
-            className="btn"
-            onClick={handleLogout}
-            disabled={isLogouting}
-        >
-            {isLogouting ? "Loading..." : "Logout"}
-        </button> */}
