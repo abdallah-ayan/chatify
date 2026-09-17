@@ -3,19 +3,46 @@ import { useAuthStore } from '../store/useAuthStore';
 import BorderAnimatedContainer from '../components/BorderAnimatedContainer';
 import { MessageCircleIcon, LockIcon, MailIcon, UserIcon, LoaderIcon } from "lucide-react";
 import { Link, useNavigate } from 'react-router';
+import validator from "validator";
+import toast from "react-hot-toast";
 export default function SignUp() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({ fullName: "", email: "", password: "" });
   const { signup, isSigningUp } = useAuthStore();
-  
+
   const handleSubmit = async (e) => {
-      e.preventDefault();
+    e.preventDefault();
 
-      const success = await signup(formData);
+    if (!formData.fullName.trim()) {
+      toast.error("Full name is required");
+      return;
+    }
 
-      if (success) {
-          navigate("/");
-      }
+    if (!formData.email.trim()) {
+      toast.error("Email is required");
+      return;
+    }
+
+    if (!validator.isEmail(formData.email)) {
+      toast.error("Please provide a valid email");
+      return;
+    }
+
+    if (!formData.password) {
+      toast.error("Password is required");
+      return;
+    }
+
+    if (formData.password.length < 6) {
+      toast.error("Password must be at least 6 characters");
+      return;
+    }
+
+    const success = await signup(formData);
+
+    if (success) {
+      navigate("/");
+    }
   };
 
   return (
@@ -36,10 +63,10 @@ export default function SignUp() {
                     <label className='auth-input-label'>Full Name</label>
                     <div className='relative'>
                       <UserIcon className='auth-input-icon' />
-                      <input type='text' value={formData.fullName} 
+                      <input type='text' value={formData.fullName}
                         onChange={(e) => {
-                          setFormData({ ...formData , fullName : e.target.value})
-                        }} 
+                          setFormData({ ...formData, fullName: e.target.value })
+                        }}
                         className='input'
                         placeholder='John Doe'
                       />
@@ -47,14 +74,14 @@ export default function SignUp() {
                   </div>
 
 
-                   <div>
+                  <div>
                     <label className='auth-input-label'>Email</label>
                     <div className='relative'>
                       <MailIcon className='auth-input-icon' />
-                      <input type='email' value={formData.email} 
+                      <input type='email' value={formData.email}
                         onChange={(e) => {
-                          setFormData({ ...formData , email : e.target.value})
-                        }} 
+                          setFormData({ ...formData, email: e.target.value })
+                        }}
                         className='input'
                         placeholder='abdallah@ayan.com'
                       />
@@ -65,10 +92,10 @@ export default function SignUp() {
                     <label className='auth-input-label'>Password</label>
                     <div className='relative'>
                       <MailIcon className='auth-input-icon' />
-                      <input type='password' value={formData.password} 
+                      <input type='password' value={formData.password}
                         onChange={(e) => {
-                          setFormData({ ...formData , password : e.target.value})
-                        }} 
+                          setFormData({ ...formData, password: e.target.value })
+                        }}
                         className='input'
                         placeholder='Enter Your Password'
                       />
@@ -76,7 +103,7 @@ export default function SignUp() {
                   </div>
 
 
-                    <button className="auth-btn" type="submit" disabled={isSigningUp}>
+                  <button className="auth-btn" type="submit" disabled={isSigningUp}>
                     {isSigningUp ? (
                       <LoaderIcon className="w-full h-5 animate-spin text-center" />
                     ) : (
@@ -84,7 +111,7 @@ export default function SignUp() {
                     )}
                   </button>
 
-                  
+
 
 
                 </form>
@@ -98,7 +125,7 @@ export default function SignUp() {
 
 
 
-          <div className="hidden md:w-1/2 md:flex items-center justify-center p-6 bg-gradient-to-bl from-slate-800/20 to-transparent">
+            <div className="hidden md:w-1/2 md:flex items-center justify-center p-6 bg-gradient-to-bl from-slate-800/20 to-transparent">
               <div>
                 <img
                   src="/signup.png"
