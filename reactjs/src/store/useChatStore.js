@@ -13,12 +13,12 @@ export const useChatStore = create((set , get) => ({
     isSoundEnabled : localStorage.getItem("isSoundEnabled") ?? false , 
 
 
-    toggleSound : (state) => {
+    toggleSound : () => {
         localStorage.setItem("isSoundEnabled" , !get().isSoundEnabled)
         set({isSoundEnabled :  !get().isSoundEnabled})
     } ,
 
-    setActiovTap : (tab) => set({activeTab : tab }),
+    setActiveTab : (tab) => set({activeTab : tab }),
     setSelectedUser : (user) => set({selectedUser : user }) ,
 
     getAllContanct : asyncErrorHandler(async () => {
@@ -33,6 +33,6 @@ export const useChatStore = create((set , get) => ({
         const res = await axiosInstance.get("/message/chat")
         set({isUsersLoading : false})
         set({chats : res.data.data.users})
-    } , set , {isUsersLoading : false})
+    } , set , {isUsersLoading : false}) ,
 
 }));

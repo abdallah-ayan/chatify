@@ -17,7 +17,7 @@ export const getChatPartners = asyncErrorHandler(async (req , res) => {
         {senderId : myId} ,
         {receiverId : myId}
     ]})
-    const ids = [...new Set(messages.map((msg) => msg.senderId == myId ? msg.receiverId : msg.senderId ))]
+    const ids = [...new Set(messages.map((msg) => msg.senderId.toString() == myId.toString() ? msg.receiverId : msg.senderId ))]
     const users = await User.find({_id : {$in : ids}})
     Res(res).status(200).length(users?.length ?? 0).state("sucess").data({users}).end();
 }) // users i called hem
