@@ -20,7 +20,12 @@ function ChatContainer() {
     useEffect(() => {
     getMessagesByUserId(selectedUser._id);
  
-  }, [getMessagesByUserId]);
+  }, [getMessagesByUserId , selectedUser]);
+
+  useEffect(()=> {
+    if(messageEndRef.current) 
+      messageEndRef.current.scrollIntoView({behavior : "smooth"});
+  },[messages])
 
   return (
     <>
@@ -54,7 +59,7 @@ function ChatContainer() {
               </div>
             ))}
             {/* 👇 scroll target */}
-            <div ref={messageEndRef} />
+            <div ref={messageEndRef}  />
           </div>
         ) : isMessagesLoading ? (
           <MessagesLoadingSkeleton />
