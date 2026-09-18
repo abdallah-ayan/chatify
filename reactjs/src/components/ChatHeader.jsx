@@ -1,0 +1,37 @@
+import { XIcon } from "lucide-react"
+import { useChatStore } from "../store/useChatStore"
+import { useEffect } from "react"
+
+export default function ChatHeader() {
+  const { selectedUser, setSelectedUser } = useChatStore()
+
+
+  useEffect(()=> {
+    const handleKeyDown = event => {  if(event.code == "Escape") setSelectedUser(null) }
+    window.addEventListener("keydown" ,  handleKeyDown)
+    return () => {
+      window.removeEventListener("keydown" , handleKeyDown);
+    }
+  } , [setSelectedUser])
+
+  return (
+    <div className="flex justify-between items-center bg-slate-800/50 border-b border-slate-700/50 max-h-[84px] px-6 py-10 flex-1" >
+      <div className="flex items-center space-x-3">
+        <div className={`avatar `}>
+          <div className="w-12 rounded-full">
+            <img src={selectedUser.profilePic || "/avatar.png"} alt={selectedUser.fullName} />
+          </div>
+        </div>
+
+        <div>
+          <h3 className="text-slate-200 font-medium">{selectedUser.fullName}</h3>
+          <p className="text-slate-400 text-sm">{/*isOnline*/ true ? "Online" : "Offline"}</p>
+        </div>
+      </div>
+
+      <button onClick={() => setSelectedUser(null)}>
+        <XIcon className="w-5 h-5 text-slate-400 hover:text-slate-200 transition-colors cursor-pointer" />
+      </button>
+    </div>
+  )
+}
