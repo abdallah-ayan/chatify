@@ -29,7 +29,7 @@ export const getMessagesByUserId = asyncErrorHandler(async (req , res) => {
     const messages = await Message.find({$or : [
         {senderId : myId , receiverId : id} , 
         {senderId : id , receiverId : myId} ,
-    ]}).sort({ createdAt: -1 })
+    ]}).sort({ createdAt: 1 })
     Res(res).status(200).length(messages?.length ?? 0).state("sucess").data({messages}).end();
 })
 
@@ -46,8 +46,8 @@ export const sendMessage = asyncErrorHandler(async (req , res) => {
         const uploudResult = await cloudinary.uploader.upload(image);
         imageUrl = uploudResult.secure_url
     }
-    await Message.create({senderId , receiverId : id , text , image :  imageUrl})
-    Res(res).status(201).state("sucess").data({text , image : imageUrl }).end();
+    const message = await Message.create({senderId , receiverId : id , text , image :  imageUrl})
+    Res(res).status(201).state("sucess").data(message).end();
 })
 
 
