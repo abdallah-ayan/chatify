@@ -33,7 +33,6 @@ export default function SignUp() {
       return;
     }
 
-    console.log(1)
     const success = await login(formData);
 
     if (success) {
