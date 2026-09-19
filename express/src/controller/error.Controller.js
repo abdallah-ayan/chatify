@@ -56,6 +56,7 @@ function prodError(error , res) {
 }
 
 export default function (error , req , res , next) {
+    console.log(error)
     if (res.headersSent) return ;
     if(process.env.NODE_ENV == "development") {
         devError(error , res) ;

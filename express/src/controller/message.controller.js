@@ -4,7 +4,8 @@ import User from "../model/User.js";
 import Res from "../utils/Res.js";
 import cloudinary from "../lib/cloudinary.js";
 import customError from "../utils/customError.js";
-
+import { getReceiverSoketId } from "../lib/socket.js";
+import { io } from "../lib/socket.js";
 export const getAllContects = asyncErrorHandler(async (req , res) => {
     const loggedInUserId = req.user._id;
     const filteredUser = await User.find({_id : {$ne : loggedInUserId}});
@@ -46,7 +47,14 @@ export const sendMessage = asyncErrorHandler(async (req , res) => {
         const uploudResult = await cloudinary.uploader.upload(image);
         imageUrl = uploudResult.secure_url
     }
+
+
     const message = await Message.create({senderId , receiverId : id , text , image :  imageUrl})
+
+    const receiverSoketId = getReceiverSoketId(message.receiverId);
+    if(receiverSoketId) { // receiver is online
+        io.to(receiverSoketId).emit("newMessage" , message)
+    }
     Res(res).status(201).state("sucess").data(message).end();
 })
 
